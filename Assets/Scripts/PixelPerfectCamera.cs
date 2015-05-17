@@ -3,7 +3,7 @@
 /**
  * A camera to help with Orthagonal mode when you need it to lock to pixels.  Desiged to be used on android and retina devices.
  */
-public class PixelPerfectCam : MonoBehaviour
+public class PixelPerfectCamera : MonoBehaviour
 {
     /**
      * The target size of the view port.
