@@ -1,11 +1,10 @@
 fileFormatVersion: 2
-guid: 287d50a1f4d8245cc84b229424645d82
-timeCreated: 1431833609
+guid: ea2de1f6291d345e6b9a3aac3a148062
+timeCreated: 1431836233
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences:
-  - curShader: {fileID: 4800000, guid: e88d92e40fdc6481ab3a6769d8dc883a, type: 3}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
