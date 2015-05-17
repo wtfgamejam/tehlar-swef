@@ -47,20 +47,8 @@
             	half4 color = tex2D(_MainTex, i.uv);
             	float2 ps = i.scr_pos.xy * _ScreenParams.xy / i.scr_pos.w;
             	int pp = (int)ps.x % 3;
-            	float4 muls = float4(0, 0, 0, 1);
-            	if (pp == 1) {
-            		muls.r = 1;
-            		muls.g = _VertsColor;
-            		muls.b = _VertsColor;
-            	} else if (pp == 2) {
-            		muls.g = 1;
-            		muls.b = _VertsColor;
-            		muls.r = _VertsColor;
-            	} else {
-            		muls.b = 1;
-            		muls.g = _VertsColor;
-            		muls.r = _VertsColor;
-            	}
+            	float4 muls = float4(_VertsColor, _VertsColor, _VertsColor, 1);
+            	muls[pp-1] = 1;
             	
             	if ((int)ps.y % 3 == 0) {
             		muls *= float4(_ScansColor, _ScansColor, _ScansColor, 1);
