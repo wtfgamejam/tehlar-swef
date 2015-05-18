@@ -3,7 +3,7 @@
 public class AspectUtility : MonoBehaviour
 {
     
-    public float _wantedAspectRatio = 1.5f;
+    public float _wantedAspectRatio = 1.333333f;
     public bool landscapeModeOnly = true;
     static public bool _landscapeModeOnly = true;
     static float wantedAspectRatio;
@@ -16,14 +16,6 @@ public class AspectUtility : MonoBehaviour
         cam = GetComponent<Camera>();
         if (!cam) {
             cam = Camera.main;
-            Debug.Log("Setting the main camera " + cam.name);
-        } else {
-            Debug.Log("Setting the main camera " + cam.name);
-        }
-        
-        if (!cam) {
-            Debug.LogError("No camera available");
-            return;
         }
         wantedAspectRatio = _wantedAspectRatio;
         SetCamera();
@@ -34,10 +26,8 @@ public class AspectUtility : MonoBehaviour
         float currentAspectRatio = 0.0f;
         if (Screen.orientation == ScreenOrientation.LandscapeRight ||
             Screen.orientation == ScreenOrientation.LandscapeLeft) {
-            Debug.Log("Landscape detected...");
             currentAspectRatio = (float)Screen.width / Screen.height;
         } else {
-            Debug.Log("Portrait detected...?");
             if (Screen.height > Screen.width && _landscapeModeOnly) {
                 currentAspectRatio = (float)Screen.height / Screen.width;
             } else {
@@ -47,7 +37,7 @@ public class AspectUtility : MonoBehaviour
         // If the current aspect ratio is already approximately equal to the desired aspect ratio,
         // use a full-screen Rect (in case it was set to something else previously)
         
-        Debug.Log("currentAspectRatio = " + currentAspectRatio + ", wantedAspectRatio = " + wantedAspectRatio);
+        //Debug.Log("currentAspectRatio = " + currentAspectRatio + ", wantedAspectRatio = " + wantedAspectRatio);
         
         if ((int)(currentAspectRatio * 100) / 100.0f == (int)(wantedAspectRatio * 100) / 100.0f) {
             cam.rect = new Rect(0.0f, 0.0f, 1.0f, 1.0f);
