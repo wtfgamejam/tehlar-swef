@@ -7,8 +7,8 @@ public class TehlarSwef : MonoBehaviour
 {
 
     public int pixelsPerUnit = 10;
-    float onePixel;
     public float moveSpeed = 0.01f;
+    float onePixel;
     Transform trans;
     BoxCollider2D c2d;
     Bounds bounds;
@@ -30,7 +30,7 @@ public class TehlarSwef : MonoBehaviour
     {
         trans = this.GetComponent<Transform>();
         c2d = this.GetComponent<BoxCollider2D>();
-        onePixel = 1 / pixelsPerUnit;
+        onePixel = 1.0f / pixelsPerUnit;
         trueX = 0.0f;
         trueY = 0.0f;
     }
@@ -57,7 +57,7 @@ public class TehlarSwef : MonoBehaviour
             trueY += ayDir * Mathf.Min(dist, Mathf.Abs(testDistance(bounds, new Vector2(0.0f, ayDir), dist)));
         }
         
-        if(Mathf.Abs(trueX) + Mathf.Abs(trueY) >= onePixel)
+        if (Mathf.Abs(trueX) + Mathf.Abs(trueY) >= onePixel)
         {
             trueX += pos.x;
             trueY += pos.y;
