@@ -8,12 +8,16 @@ public class TehlarSwef : MonoBehaviour
 
     public int pixelsPerUnit = 10;
     public float moveSpeed = 0.01f;
+    public float health = 1.0f;
+    string healthChar = "█";
+
     float onePixel;
     Transform trans;
     BoxCollider2D c2d;
     Bounds bounds;
     float trueX;
     float trueY;
+
     Vector3 pos;
     float ax;
     float axDir;
@@ -49,6 +53,7 @@ public class TehlarSwef : MonoBehaviour
 
         if (ax != 0.0f)
         {
+            trans.rotation = axDir > 0.0f ? Quaternion.Euler(0, 180, 0) : Quaternion.identity;
             trueX += axDir * Mathf.Min(dist, Mathf.Abs(testDistance(bounds, new Vector2(axDir, 0.0f), dist)));
         }
 
