@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 using Tim;
 
 public class TehlarSwef : MonoBehaviour
@@ -19,9 +20,10 @@ public class TehlarSwef : MonoBehaviour
     float ay;
     float ayDir;
     float dist;
-    Vector2[] raysSource = new Vector2[3];
-    RaycastHit2D[] rays = new RaycastHit2D[3];
-    float[] rayDist = new float[3];
+
+    Vector2[] raysSource = new Vector2[5];
+    RaycastHit2D[] rays = new RaycastHit2D[5];
+    float[] rayDist = new float[5];
 
     // Use this for initialization
     void Start()
@@ -75,50 +77,59 @@ public class TehlarSwef : MonoBehaviour
         Vector3 min = aabb.min;
         Vector3 max = aabb.max;
         Vector3 cen = aabb.center;
+        Vector3 ext = aabb.extents;
 
         if (direction.x == -1.0f)
         {
             //Left
-            raysSource [0] = new Vector2(min.x - 0.01f, max.y - 0.01f);
-            raysSource [1] = new Vector2(min.x - 0.01f, cen.y);
-            raysSource [2] = new Vector2(min.x - 0.01f, min.y + 0.01f);
+            raysSource[0] = new Vector2(min.x - 0.01f, max.y - 0.01f);
+            raysSource[1] = new Vector2(min.x - 0.01f, max.y - (ext.y / 2.0f));
+            raysSource[2] = new Vector2(min.x - 0.01f, cen.y);
+            raysSource[3] = new Vector2(min.x - 0.01f, min.y + (ext.y / 2.0f));
+            raysSource[4] = new Vector2(min.x - 0.01f, min.y + 0.01f);
         }
         else if (direction.x == 1.0f)
         {
             //Right
-            raysSource [0] = new Vector2(max.x + 0.01f, max.y - 0.01f);
-            raysSource [1] = new Vector2(max.x + 0.01f, cen.y);
-            raysSource [2] = new Vector2(max.x + 0.01f, min.y + 0.01f);
+            raysSource[0] = new Vector2(max.x + 0.01f, max.y - 0.01f);
+            raysSource[1] = new Vector2(max.x + 0.01f, max.y - (ext.y / 2.0f));
+            raysSource[2] = new Vector2(max.x + 0.01f, cen.y);
+            raysSource[3] = new Vector2(max.x + 0.01f, min.y + (ext.y / 2.0f));
+            raysSource[4] = new Vector2(max.x + 0.01f, min.y + 0.01f);
         }
 
         if (direction.y == 1.0f)
         {
             //Up
-            raysSource [0] = new Vector2(min.x + 0.01f, max.y + 0.01f);
-            raysSource [1] = new Vector2(cen.x, max.y + 0.01f);
-            raysSource [2] = new Vector2(max.x - 0.01f, max.y + 0.01f);
+            raysSource[0] = new Vector2(min.x + 0.01f, max.y + 0.01f);
+            raysSource[1] = new Vector2(max.x - (ext.x / 2.0f), max.y + 0.01f);
+            raysSource[2] = new Vector2(cen.x, max.y + 0.01f);
+            raysSource[3] = new Vector2(min.x + (ext.x / 2.0f), max.y + 0.01f);
+            raysSource[4] = new Vector2(max.x - 0.01f, max.y + 0.01f);
         }
         else if (direction.y == -1.0f)
         {
             //Down
-            raysSource [0] = new Vector2(min.x + 0.01f, min.y - 0.01f);
-            raysSource [1] = new Vector2(cen.x, min.y - 0.01f);
-            raysSource [2] = new Vector2(max.x - 0.01f, min.y - 0.01f);
+            raysSource[0] = new Vector2(min.x + 0.01f, min.y - 0.01f);
+            raysSource[1] = new Vector2(max.x - (ext.x / 2.0f), min.y - 0.01f);
+            raysSource[2] = new Vector2(cen.x, min.y - 0.01f);
+            raysSource[3] = new Vector2(min.x + (ext.x / 2.0f), min.y - 0.01f);
+            raysSource[4] = new Vector2(max.x - 0.01f, min.y - 0.01f);
         }
 
-        for (var i = 0; i < 3; i++)
+        for (var i = 0; i < 5; i++)
         {
-            rays [i] = Physics2D.Raycast(raysSource [i], direction);
-            if (rays [i].collider != null)
+            rays[i] = Physics2D.Raycast(raysSource[i], direction);
+            if (rays[i].collider != null)
             {
-                rayDist [i] = rays [i].distance;
+                rayDist[i] = rays[i].distance;
             }
             else
             {
-                rayDist [i] = distance;
+                rayDist[i] = distance;
             }
-            //Debug.DrawRay(raysSource [i], direction, Color.red);
+            //Debug.DrawRay(raysSource[i], direction, Color.red);
         }
-        return Mathf.Min(rayDist [0], Mathf.Min(rayDist [1], rayDist [2]));
+        return rayDist.Min();
     }
 }
