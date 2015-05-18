@@ -8,13 +8,21 @@ public class TehlarSwef : MonoBehaviour
 
     public int pixelsPerUnit = 10;
     public float moveSpeed = 0.01f;
+    public Sprite humanSprite;
+    public Sprite alienSprite;
+    public bool alienForm = false;
     public float health = 1.0f;
+
+    public AudioClip transformSound;
+
     string healthChar = "█";
 
-    float onePixel;
     Transform trans;
+    SpriteRenderer sprite;
     BoxCollider2D c2d;
     Bounds bounds;
+    AudioSource audio;
+    float onePixel;
     float trueX;
     float trueY;
 
@@ -33,7 +41,10 @@ public class TehlarSwef : MonoBehaviour
     void Start()
     {
         trans = this.GetComponent<Transform>();
+        sprite = this.GetComponent<SpriteRenderer>();
+        sprite.sprite = alienForm ? alienSprite : humanSprite;
         c2d = this.GetComponent<BoxCollider2D>();
+        audio = this.GetComponent<AudioSource>();
         onePixel = 1.0f / pixelsPerUnit;
         trueX = 0.0f;
         trueY = 0.0f;
@@ -50,6 +61,21 @@ public class TehlarSwef : MonoBehaviour
         ayDir = Mathf.Sign(ay);
 
         dist = (moveSpeed / pixelsPerUnit) * Time.deltaTime;
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            alienForm = !alienForm;
+            if (alienForm)
+            {
+                audio.clip = transformSound;
+                audio.Play();
+                sprite.sprite = alienSprite;
+            }
+            else
+            {
+                sprite.sprite = humanSprite;
+            }
+        }
 
         if (ax != 0.0f)
         {
